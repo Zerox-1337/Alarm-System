@@ -3,12 +3,19 @@
 2 Product design specification
 
 • Manage 8 digital and 4 analog sensors
+
 • Show the time when the alarm was triggered
+
 • Sound the alarm when triggered
+
 • Activate the alarm system with a keypad
+
 • Communication with external computer
+
 • Secret code to turn the alarm off
+
 • Setting to test the system without a siren
+
 
 3 Components
 • Micro controller unit
