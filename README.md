@@ -4,6 +4,7 @@
 
 This is a project in c for an alarm system using a micro controller.
 
+
 2 Product design specification
 
 • Manage 8 digital and 4 analog sensors
@@ -22,6 +23,7 @@ This is a project in c for an alarm system using a micro controller.
 
 
 3 Components
+
 • Micro controller unit
 AVR AtMega16
 
