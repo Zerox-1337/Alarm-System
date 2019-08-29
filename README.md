@@ -1,5 +1,9 @@
 # Alarm-System
 
+1 Information
+
+This is a project in c for an alarm system using a micro controller.
+
 2 Product design specification
 
 • Manage 8 digital and 4 analog sensors
@@ -20,14 +24,20 @@
 3 Components
 • Micro controller unit
 AVR AtMega16
+
 • Display
 1602a LCD
+
 • Keypad 4x4
+
 • Keyboard Controller
 MM74C922
+
 • Buffer
 74HC
+
 • Digital Sensor
 555-28027
+
 • Analog Sensor
 LM35C
