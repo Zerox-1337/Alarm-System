@@ -2,7 +2,7 @@
 
 1 Information
 
-This is a project in c for an alarm system using a micro controller.
+This is a project in c for an alarm system using a micro controller. A website has also been made for the project. 
 
 
 2 Product design specification
