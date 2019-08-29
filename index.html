@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html>
+<title>W3.CSS</title>
+<meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
+.w3-row-padding img {margin-bottom: 12px}
+/* Set the width of the sidebar to 120px */
+.w3-sidebar {width: 120px;background: #222;}
+/* Add a left margin to the "page content" that matches the width of the sidebar (120px) */
+#main {margin-left: 120px}
+/* Remove margins from "page content" on small screens */
+@media only screen and (max-width: 600px) {#main {margin-left: 0}}
+</style>
+<body class="w3-black">
+
+<!-- Icon Bar (Sidebar - hidden on small screens) -->
+<nav class="w3-sidebar w3-bar-block w3-small w3-hide-small">
+  <!-- Avatar image in top left corner -->
+  <img src="https://img.clipartfest.com/43103ed5eabd4df51268e001545006ce_-light-alarm-clip-art-at-emergency-alarm-clipart_600-600.png" style="width:100%">
+  <a href="#" class="w3-bar-item w3-button w3-center w3-padding-large w3-hover-black">
+    
+
+    <p>HEM</p>
+  </a>
+  <a href="#about" class="w3-bar-item w3-button w3-center w3-padding-large w3-hover-black">
+    
+    <p>INFORMATION</p>
+  </a>
+  <a href="#code" class="w3-bar-item w3-button w3-center w3-padding-large w3-hover-black">
+    
+    <p>KOD</p>
+  </a>
+  <a href="#report" class="w3-bar-item w3-button w3-center w3-padding-large w3-hover-black">
+    
+    <p>RAPPORT</p>
+  </a>
+</nav>
+
+<!-- Navbar on small screens (Hidden on medium and large screens) -->
+<div class="w3-top w3-hide-large w3-hide-medium" id="myNavbar">
+  <div class="w3-bar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
+    <a href="#" class="w3-bar-item w3-button" style="width:25% !important">HEM</a>
+    <a href="#about" class="w3-bar-item w3-button" style="width:25% !important">INFORMATION</a>
+    <a href="#code" class="w3-bar-item w3-button" style="width:25% !important">KOD</a>
+    <a href="#report" class="w3-bar-item w3-button" style="width:25% !important">RAPPORT</a>
+  </div>
+</div>
+
+<!-- Page Content -->
+<div class="w3-padding-large" id="main">
+  <!-- Header/Home -->
+  <header class="w3-container w3-padding-32 w3-center w3-black" id="home">
+    <h1 class="w3-jumbo">Larm System</h1>
+    <p>Ett projekt av Adnan Mehmedagic & Mattias Sönnerup.</p>
+    <img src="https://img.clipartfest.com/43103ed5eabd4df51268e001545006ce_-light-alarm-clip-art-at-emergency-alarm-clipart_600-600.png" alt="boy" class="w3-image" width="700" height="900">
+  </header>
+
+  <!-- About Section -->
+  <div class="w3-content w3-justify w3-text-grey w3-padding-64" id="about">
+    <b><center><h2 style="font-size:500%;" class="w3-text-light-grey">Information</h2></center></b>
+    <hr style="width:500px" class="w3-opacity">
+    <p style="color:white;font-size:200%;">Vi har har under kursen, EITF40, gång skapat ett larmsystem från konceptfas till en väl fungerande produkt. Det vi har skapat är en larmanläggning med sensorer både för rörelse och temperatur. Vår produkt har stöd för upp till 8 digitala rörelsesensorer och 4 analoga temperatursensorer. </p>
+<p style="color:white;font-size:200%;">Man sätter helt enkelt på larmet med ON-knappen och stänger av det med OFF-knappen följt av en hemlig kod. Det går även att testa larmsystemet genom att trycka på test knappen.  </p> 
+<p style="color:white;font-size:200%;">Larmsystemet har även support för att ställa in tiden och för att skicka ut en signal till en larmcentral eller dator. All information om systemet såsom om larmet är på eller av, vilken sensor som satte igång alarmet och vid vilken tid larmet utlöstes, visas på en LCD skärm.</p> 
+<p style="color:white;font-size:200%;">I sin helhet är det ett larmsystem som tar hänsyn både till inbrottstjuvar och till bränder. </p>  
+ </div>
+    
+   <div class="w3-content w3-justify w3-text-grey w3-padding-64" id="code">
+    <b><center><h2 style="font-size:500%;" class="w3-text-light-grey">Kod</h2></center></b>
+    <hr style="width:500px" class="w3-opacity">
+
+<!-- HTML generated using hilite.me --><div style="background: #202020; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #999999; font-style: italic">/*</span>
+<span style="color: #999999; font-style: italic"> * alarm_system.c</span>
+<span style="color: #999999; font-style: italic"> *</span>
+<span style="color: #999999; font-style: italic"> * Created: 2017-02-13 13:05:51</span>
+<span style="color: #999999; font-style: italic"> * Author : Mattias Sonnerup &amp; Adnan Mehmedagic</span>
+<span style="color: #999999; font-style: italic"> */</span> 
+
+<span style="color: #cd2828; font-weight: bold">#include &lt;avr/io.h&gt;</span>
+<span style="color: #cd2828; font-weight: bold">#define	F_CPU 1118000</span>
+<span style="color: #cd2828; font-weight: bold">#include&lt;util/delay.h&gt;</span>
+<span style="color: #cd2828; font-weight: bold">#include &lt;stdio.h&gt;</span>
+<span style="color: #cd2828; font-weight: bold">#include &quot;hd44780.h&quot; </span><span style="color: #999999; font-style: italic">// Display lib.</span>
+
+<span style="color: #cd2828; font-weight: bold">#include &quot;main.h&quot;</span>
+<span style="color: #cd2828; font-weight: bold">#include &lt;avr/interrupt.h&gt;</span>
+<span style="color: #cd2828; font-weight: bold">#define row_one_start_index 40</span>
+
+<span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #6ab825; font-weight: bold">volatile</span> <span style="color: #d0d0d0">state</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">;</span>
+<span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #6ab825; font-weight: bold">volatile</span> <span style="color: #d0d0d0">larm_state</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">// if the larm is triggered or not.</span>
+<span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #6ab825; font-weight: bold">volatile</span> <span style="color: #d0d0d0">test_mode</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">// Test mode variable. activates</span>
+
+<span style="color: #6ab825; font-weight: bold">char</span> <span style="color: #6ab825; font-weight: bold">volatile</span> <span style="color: #d0d0d0">code_entered_one</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;k&#39;</span><span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">// The code we enter. k = empty. </span>
+<span style="color: #6ab825; font-weight: bold">char</span> <span style="color: #6ab825; font-weight: bold">volatile</span> <span style="color: #d0d0d0">code_entered_two</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;k&#39;</span><span style="color: #d0d0d0">;</span>
+<span style="color: #6ab825; font-weight: bold">char</span> <span style="color: #6ab825; font-weight: bold">volatile</span> <span style="color: #d0d0d0">code_entered_three</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;k&#39;</span><span style="color: #d0d0d0">;</span>
+
+<span style="color: #6ab825; font-weight: bold">const</span> <span style="color: #6ab825; font-weight: bold">char</span> <span style="color: #d0d0d0">code_correct_one</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;1&#39;</span><span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">// The first number that needs to be entered.</span>
+<span style="color: #6ab825; font-weight: bold">const</span> <span style="color: #6ab825; font-weight: bold">char</span> <span style="color: #d0d0d0">code_correct_two</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;5&#39;</span><span style="color: #d0d0d0">;</span>
+<span style="color: #6ab825; font-weight: bold">const</span> <span style="color: #6ab825; font-weight: bold">char</span> <span style="color: #d0d0d0">code_correct_three</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;3&#39;</span><span style="color: #d0d0d0">;</span>
+<span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #6ab825; font-weight: bold">volatile</span> <span style="color: #d0d0d0">minute_passed_ones</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">3</span><span style="color: #d0d0d0">;</span>
+<span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #6ab825; font-weight: bold">volatile</span> <span style="color: #d0d0d0">minute_passed_tens</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">3</span><span style="color: #d0d0d0">;</span>
+<span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #6ab825; font-weight: bold">volatile</span> <span style="color: #d0d0d0">hour_passed_ones</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">6</span><span style="color: #d0d0d0">;</span>
+<span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #6ab825; font-weight: bold">volatile</span> <span style="color: #d0d0d0">hour_passed_tens</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">;</span>
+<span style="color: #999999; font-style: italic">/*******************************************************************</span>
+<span style="color: #999999; font-style: italic">*</span>
+<span style="color: #999999; font-style: italic">*						DISPLAY FUNCTIONS</span>
+<span style="color: #999999; font-style: italic">*</span>
+<span style="color: #999999; font-style: italic">********************************************************************/</span>
+<span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #447fcf">write_to_display</span><span style="color: #d0d0d0">(</span><span style="color: #6ab825; font-weight: bold">char</span> <span style="color: #d0d0d0">*text,</span> <span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #d0d0d0">line,</span> <span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #d0d0d0">offset,</span> <span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #d0d0d0">clear)</span>
+<span style="color: #d0d0d0">{</span>
+	<span style="color: #d0d0d0">PORTD</span> <span style="color: #d0d0d0">|=</span> <span style="color: #d0d0d0">_BV(PD7);</span><span style="color: #999999; font-style: italic">// We are using A4-A5, D7 now for CS. Active low</span>
+	<span style="color: #d0d0d0">DDRB</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0xFF</span><span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">// All B are outputs</span>
+	<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(line</span> <span style="color: #d0d0d0">&gt;</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">{</span>
+		<span style="color: #d0d0d0">offset</span> <span style="color: #d0d0d0">+=</span> <span style="color: #3677a9">40</span><span style="color: #d0d0d0">;</span>
+	<span style="color: #d0d0d0">}</span>
+	<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(clear</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">lcd_init();</span>
+	<span style="color: #d0d0d0">lcd_goto(offset);</span>
+	<span style="color: #d0d0d0">lcd_puts(text);</span>
+	<span style="color: #d0d0d0">DDRB</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0x00</span><span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">// All B are inputs again.</span>
+	<span style="color: #d0d0d0">PORTD</span> <span style="color: #d0d0d0">&amp;=</span> <span style="color: #d0d0d0">~_BV(PD7);</span><span style="color: #999999; font-style: italic">// We are using A4-A5, D7 now for CS. Active low</span>
+<span style="color: #d0d0d0">}</span>
+
+<span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #447fcf">write_to_display_char</span><span style="color: #d0d0d0">(</span><span style="color: #6ab825; font-weight: bold">char</span> <span style="color: #d0d0d0">text,</span> <span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #d0d0d0">line,</span> <span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #d0d0d0">offset,</span> <span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #d0d0d0">clear)</span>
+<span style="color: #d0d0d0">{</span>
+	<span style="color: #d0d0d0">PORTD</span> <span style="color: #d0d0d0">|=</span> <span style="color: #d0d0d0">_BV(PD7);</span><span style="color: #999999; font-style: italic">// We are using A4-A5, D7 now for CS. Active low</span>
+	<span style="color: #d0d0d0">DDRB</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0xFF</span><span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">// All B are outputs</span>
+	<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(line</span> <span style="color: #d0d0d0">&gt;</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">{</span>
+		<span style="color: #d0d0d0">offset</span> <span style="color: #d0d0d0">+=</span> <span style="color: #3677a9">40</span><span style="color: #d0d0d0">;</span>
+	<span style="color: #d0d0d0">}</span>
+	<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(clear</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">lcd_init();</span>
+	<span style="color: #d0d0d0">lcd_goto(offset);</span>
+	<span style="color: #d0d0d0">lcd_putc(text);</span>
+	<span style="color: #d0d0d0">DDRB</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0x00</span><span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">// All B are inputs again.</span>
+	<span style="color: #d0d0d0">PORTD</span> <span style="color: #d0d0d0">&amp;=</span> <span style="color: #d0d0d0">~_BV(PD7);</span><span style="color: #999999; font-style: italic">// We are using A4-A5, D7 now for CS. Active low</span>
+<span style="color: #d0d0d0">}</span>
+<span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #447fcf">display_time</span><span style="color: #d0d0d0">(</span><span style="color: #6ab825; font-weight: bold">void</span><span style="color: #d0d0d0">)</span>
+<span style="color: #d0d0d0">{</span>
+	<span style="color: #d0d0d0">write_to_display(</span><span style="color: #ed9d13">&quot;Time: &quot;</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">0</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+	<span style="color: #d0d0d0">write_to_display_char((</span><span style="color: #6ab825; font-weight: bold">char</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">48</span> <span style="color: #d0d0d0">+</span> <span style="color: #d0d0d0">hour_passed_tens),</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">6</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+	<span style="color: #d0d0d0">write_to_display_char((</span><span style="color: #6ab825; font-weight: bold">char</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">48</span> <span style="color: #d0d0d0">+</span> <span style="color: #d0d0d0">hour_passed_ones),</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">7</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+	<span style="color: #d0d0d0">write_to_display_char(</span><span style="color: #ed9d13">&#39;:&#39;</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">8</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+	<span style="color: #d0d0d0">write_to_display_char((</span><span style="color: #6ab825; font-weight: bold">char</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">48</span> <span style="color: #d0d0d0">+</span> <span style="color: #d0d0d0">minute_passed_tens),</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">9</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+	<span style="color: #d0d0d0">write_to_display_char((</span><span style="color: #6ab825; font-weight: bold">char</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">48</span> <span style="color: #d0d0d0">+</span> <span style="color: #d0d0d0">minute_passed_ones),</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">10</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+<span style="color: #d0d0d0">}</span>
+<span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #447fcf">clear_display</span><span style="color: #d0d0d0">(</span><span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #d0d0d0">row)</span>
+<span style="color: #d0d0d0">{</span>
+	<span style="color: #6ab825; font-weight: bold">for</span> <span style="color: #d0d0d0">(</span><span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #d0d0d0">i</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">;</span> <span style="color: #d0d0d0">i</span> <span style="color: #d0d0d0">&lt;</span> <span style="color: #3677a9">16</span><span style="color: #d0d0d0">;</span> <span style="color: #d0d0d0">i++)</span>
+	<span style="color: #d0d0d0">{</span>
+		<span style="color: #d0d0d0">write_to_display_char(</span><span style="color: #ed9d13">&#39; &#39;</span><span style="color: #d0d0d0">,</span> <span style="color: #d0d0d0">row,</span> <span style="color: #d0d0d0">i,</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+	<span style="color: #d0d0d0">}</span>
+<span style="color: #d0d0d0">}</span>		
+<span style="color: #999999; font-style: italic">/*******************************************************************</span>
+<span style="color: #999999; font-style: italic">*</span>
+<span style="color: #999999; font-style: italic">*						LARM FUNCTIONS</span>
+<span style="color: #999999; font-style: italic">*</span>
+<span style="color: #999999; font-style: italic">********************************************************************/</span>
+<span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #447fcf">buzz</span><span style="color: #d0d0d0">()</span> <span style="color: #999999; font-style: italic">// For the siren</span>
+<span style="color: #d0d0d0">{</span>
+	<span style="color: #d0d0d0">PORTD</span> <span style="color: #d0d0d0">|=</span> <span style="color: #d0d0d0">_BV(PD4);</span>
+	<span style="color: #d0d0d0">_delay_ms(</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">);</span>
+	<span style="color: #d0d0d0">PORTD</span> <span style="color: #d0d0d0">&amp;=</span> <span style="color: #d0d0d0">~_BV(PD4);</span>
+	<span style="color: #d0d0d0">_delay_ms(</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">);</span>
+	
+<span style="color: #d0d0d0">}</span>
+
+<span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #447fcf">larm_on</span><span style="color: #d0d0d0">(</span><span style="color: #6ab825; font-weight: bold">char</span> <span style="color: #d0d0d0">larm_num){</span>
+	<span style="color: #d0d0d0">PORTA</span> <span style="color: #d0d0d0">|=</span> <span style="color: #d0d0d0">_BV(PA7);</span> <span style="color: #999999; font-style: italic">// diod on. </span>
+	<span style="color: #d0d0d0">write_to_display(</span><span style="color: #ed9d13">&quot;larm &quot;</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+	<span style="color: #d0d0d0">write_to_display_char(larm_num,</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">5</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+	<span style="color: #d0d0d0">write_to_display_char((</span><span style="color: #6ab825; font-weight: bold">char</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">48</span> <span style="color: #d0d0d0">+</span> <span style="color: #d0d0d0">hour_passed_tens),</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">7</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+	<span style="color: #d0d0d0">write_to_display_char((</span><span style="color: #6ab825; font-weight: bold">char</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">48</span> <span style="color: #d0d0d0">+</span> <span style="color: #d0d0d0">hour_passed_ones),</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">8</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+	<span style="color: #d0d0d0">write_to_display_char(</span><span style="color: #ed9d13">&#39;:&#39;</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">9</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+	<span style="color: #d0d0d0">write_to_display_char((</span><span style="color: #6ab825; font-weight: bold">char</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">48</span> <span style="color: #d0d0d0">+</span> <span style="color: #d0d0d0">minute_passed_tens),</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">10</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+	<span style="color: #d0d0d0">write_to_display_char((</span><span style="color: #6ab825; font-weight: bold">char</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">48</span> <span style="color: #d0d0d0">+</span> <span style="color: #d0d0d0">minute_passed_ones),</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">11</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+	<span style="color: #d0d0d0">larm_state</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">// The alarm is on. </span>
+<span style="color: #d0d0d0">}</span>
+<span style="color: #6ab825; font-weight: bold">uint16_t</span> <span style="color: #447fcf">adc_read</span><span style="color: #d0d0d0">()</span>
+<span style="color: #d0d0d0">{</span>
+	<span style="color: #d0d0d0">ADMUX</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">(ADMUX</span> <span style="color: #d0d0d0">&amp;</span> <span style="color: #3677a9">0xF8</span><span style="color: #d0d0d0">);</span> <span style="color: #999999; font-style: italic">//Selects PA0</span>
+	<span style="color: #999999; font-style: italic">// start single convertion</span>
+    <span style="color: #999999; font-style: italic">// write &#39;1&#39; to ADSC</span>
+	<span style="color: #d0d0d0">ADCSRA</span> <span style="color: #d0d0d0">|=</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">&lt;&lt;ADSC);</span>
+	<span style="color: #999999; font-style: italic">// wait for conversion to complete</span>
+    <span style="color: #999999; font-style: italic">// ADSC becomes &#39;0&#39; again</span>
+	<span style="color: #999999; font-style: italic">// till then, run loop continuously</span>
+	<span style="color: #6ab825; font-weight: bold">while</span><span style="color: #d0d0d0">(ADCSRA</span> <span style="color: #d0d0d0">&amp;</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">&lt;&lt;ADSC));</span>
+	<span style="color: #6ab825; font-weight: bold">return</span> <span style="color: #d0d0d0">(ADC);</span>
+<span style="color: #d0d0d0">}</span>
+<span style="color: #6ab825; font-weight: bold">char</span> <span style="color: #447fcf">check_larm</span><span style="color: #d0d0d0">(</span><span style="color: #6ab825; font-weight: bold">void</span><span style="color: #d0d0d0">)</span> <span style="color: #999999; font-style: italic">// REWRITE PORTS</span>
+<span style="color: #d0d0d0">{</span>
+	<span style="color: #999999; font-style: italic">// ENABLE SIGNALS BUFFER ON others OFF.</span>
+	<span style="color: #d0d0d0">PORTA</span> <span style="color: #d0d0d0">&amp;=</span> <span style="color: #d0d0d0">~_BV(PA4);</span>
+	<span style="color: #d0d0d0">PORTA</span> <span style="color: #d0d0d0">&amp;=</span> <span style="color: #d0d0d0">~_BV(PA6);</span>
+	<span style="color: #6ab825; font-weight: bold">char</span> <span style="color: #d0d0d0">larm</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;0&#39;</span><span style="color: #d0d0d0">;</span>
+	<span style="color: #6ab825; font-weight: bold">uint16_t</span> <span style="color: #d0d0d0">analog_level</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">adc_read();</span>	
+	<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(test_mode</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">)</span> <span style="color: #999999; font-style: italic">// In testing mode you see the values for analog sensor</span>
+	<span style="color: #d0d0d0">{</span>	  
+		<span style="color: #d0d0d0">write_to_display_char((</span><span style="color: #6ab825; font-weight: bold">char</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">((analog_level/</span><span style="color: #3677a9">100</span><span style="color: #d0d0d0">)+</span><span style="color: #3677a9">48</span><span style="color: #d0d0d0">),</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+		<span style="color: #d0d0d0">write_to_display_char((</span><span style="color: #6ab825; font-weight: bold">char</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">(((analog_level</span> <span style="color: #d0d0d0">%</span> <span style="color: #3677a9">100</span><span style="color: #d0d0d0">)/</span> <span style="color: #3677a9">10</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">+</span><span style="color: #3677a9">48</span><span style="color: #d0d0d0">),</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+		<span style="color: #d0d0d0">write_to_display_char((</span><span style="color: #6ab825; font-weight: bold">char</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">(((analog_level</span> <span style="color: #d0d0d0">%</span> <span style="color: #3677a9">100</span><span style="color: #d0d0d0">)%</span><span style="color: #3677a9">10</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">+</span> <span style="color: #3677a9">48</span><span style="color: #d0d0d0">),</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">2</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+	<span style="color: #d0d0d0">}</span>
+	<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(PINB</span> <span style="color: #d0d0d0">&amp;</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">&lt;&lt;PB0))</span> <span style="color: #999999; font-style: italic">// If one of the digital sensor is on. </span>
+	<span style="color: #d0d0d0">{</span>
+		<span style="color: #d0d0d0">larm</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;1&#39;</span><span style="color: #d0d0d0">;</span> 
+	<span style="color: #d0d0d0">}</span>
+	<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(PINB</span> <span style="color: #d0d0d0">&amp;</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">&lt;&lt;PB1))</span>
+	<span style="color: #d0d0d0">{</span>
+		<span style="color: #d0d0d0">larm</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;2&#39;</span><span style="color: #d0d0d0">;</span>  
+	<span style="color: #d0d0d0">}</span>
+	<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(PINB</span> <span style="color: #d0d0d0">&amp;</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">&lt;&lt;PB2))</span>
+	<span style="color: #d0d0d0">{</span>
+		<span style="color: #d0d0d0">larm</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;3&#39;</span><span style="color: #d0d0d0">;</span> 
+	<span style="color: #d0d0d0">}</span>
+	<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(PINB</span> <span style="color: #d0d0d0">&amp;</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">&lt;&lt;PB3))</span>
+	<span style="color: #d0d0d0">{</span>
+		<span style="color: #d0d0d0">PORTA</span> <span style="color: #d0d0d0">|=</span> <span style="color: #d0d0d0">_BV(PA7);</span> 
+		<span style="color: #d0d0d0">larm</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;4&#39;</span><span style="color: #d0d0d0">;</span> 
+	<span style="color: #d0d0d0">}</span>
+	<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(PINB</span> <span style="color: #d0d0d0">&amp;</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">&lt;&lt;PB4))</span>
+	<span style="color: #d0d0d0">{</span>
+		<span style="color: #d0d0d0">larm</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;5&#39;</span><span style="color: #d0d0d0">;</span> 
+	<span style="color: #d0d0d0">}</span>
+	<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(PINB</span> <span style="color: #d0d0d0">&amp;</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">&lt;&lt;PB5))</span>
+	<span style="color: #d0d0d0">{</span>
+		<span style="color: #d0d0d0">larm</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;6&#39;</span><span style="color: #d0d0d0">;</span> 
+	<span style="color: #d0d0d0">}</span>
+	<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(PINB</span> <span style="color: #d0d0d0">&amp;</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">&lt;&lt;PB6))</span>
+	<span style="color: #d0d0d0">{</span>
+		<span style="color: #d0d0d0">larm</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;7&#39;</span><span style="color: #d0d0d0">;</span> 
+	<span style="color: #d0d0d0">}</span>
+	<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(PINB</span> <span style="color: #d0d0d0">&amp;</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">&lt;&lt;PB7))</span>
+	<span style="color: #d0d0d0">{</span>
+		 <span style="color: #d0d0d0">larm</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;8&#39;</span><span style="color: #d0d0d0">;</span> 
+	<span style="color: #d0d0d0">}</span>
+	<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #6ab825; font-weight: bold">if</span><span style="color: #d0d0d0">(analog_level</span> <span style="color: #d0d0d0">&lt;</span> <span style="color: #3677a9">580</span><span style="color: #d0d0d0">){</span>
+		<span style="color: #d0d0d0">larm</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;9&#39;</span><span style="color: #d0d0d0">;</span>
+	<span style="color: #d0d0d0">}</span>
+
+	<span style="color: #999999; font-style: italic">// DISABLE SIGNALS BUFFER off.</span>
+	<span style="color: #d0d0d0">PORTA</span> <span style="color: #d0d0d0">|=</span> <span style="color: #d0d0d0">_BV(PA4);</span>
+	<span style="color: #d0d0d0">PORTA</span> <span style="color: #d0d0d0">|=</span> <span style="color: #d0d0d0">_BV(PA6);</span>
+	<span style="color: #6ab825; font-weight: bold">return</span> <span style="color: #d0d0d0">larm;</span>
+<span style="color: #d0d0d0">}</span>	  
+<span style="color: #999999; font-style: italic">/*******************************************************************</span>
+<span style="color: #999999; font-style: italic">*</span>
+<span style="color: #999999; font-style: italic">*						KEYBOARD FUNCTIONS</span>
+<span style="color: #999999; font-style: italic">*</span>
+<span style="color: #999999; font-style: italic">********************************************************************/</span>
+<span style="color: #6ab825; font-weight: bold">char</span> <span style="color: #447fcf">check_keyboard</span><span style="color: #d0d0d0">(</span><span style="color: #6ab825; font-weight: bold">void</span><span style="color: #d0d0d0">)</span> <span style="color: #999999; font-style: italic">// CHecks the keyboard and returns which key char it is.</span>
+<span style="color: #d0d0d0">{</span>
+	<span style="color: #6ab825; font-weight: bold">char</span> <span style="color: #d0d0d0">key_pressed</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;k&#39;</span><span style="color: #d0d0d0">;</span>	
+	<span style="color: #999999; font-style: italic">// A5 for keyboard enable. ~ flips other bits to 1</span>
+	<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">((PIND</span> <span style="color: #d0d0d0">&amp;</span> <span style="color: #3677a9">0x40</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">0x40</span><span style="color: #d0d0d0">)</span> <span style="color: #999999; font-style: italic">// &amp; ~ 0 If data available.</span>
+	<span style="color: #d0d0d0">{</span>
+		<span style="color: #999999; font-style: italic">// ENABLE SIGNALS BUFFER ON others OFF.</span>
+		<span style="color: #d0d0d0">PORTA</span> <span style="color: #d0d0d0">&amp;=</span> <span style="color: #d0d0d0">~_BV(PA5);</span> <span style="color: #999999; font-style: italic">//0xdf; // 0b11011111</span>
+		<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">((PINB</span> <span style="color: #d0d0d0">&amp;</span> <span style="color: #3677a9">0x0F</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">0x0F</span><span style="color: #d0d0d0">)</span>
+		<span style="color: #d0d0d0">{</span>
+			<span style="color: #d0d0d0">key_pressed</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;f&#39;</span><span style="color: #d0d0d0">;</span>
+		<span style="color: #d0d0d0">}</span>		
+
+		<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #6ab825; font-weight: bold">if</span><span style="color: #d0d0d0">((PINB</span> <span style="color: #d0d0d0">&amp;</span> <span style="color: #3677a9">0x0F</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">0x0E</span><span style="color: #d0d0d0">)</span>
+		<span style="color: #d0d0d0">{</span>
+			<span style="color: #d0d0d0">key_pressed</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;e&#39;</span><span style="color: #d0d0d0">;</span>
+		<span style="color: #d0d0d0">}</span>
+		<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #6ab825; font-weight: bold">if</span><span style="color: #d0d0d0">((PINB</span> <span style="color: #d0d0d0">&amp;</span> <span style="color: #3677a9">0x0F</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">0x0D</span><span style="color: #d0d0d0">)</span>
+		<span style="color: #d0d0d0">{</span>
+			<span style="color: #d0d0d0">key_pressed</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;d&#39;</span><span style="color: #d0d0d0">;</span>
+		<span style="color: #d0d0d0">}</span>
+		<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #6ab825; font-weight: bold">if</span><span style="color: #d0d0d0">((PINB</span> <span style="color: #d0d0d0">&amp;</span> <span style="color: #3677a9">0x0F</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">0x0C</span><span style="color: #d0d0d0">)</span>
+		<span style="color: #d0d0d0">{</span>
+			<span style="color: #d0d0d0">key_pressed</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;c&#39;</span><span style="color: #d0d0d0">;</span>
+		<span style="color: #d0d0d0">}</span>
+		<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #6ab825; font-weight: bold">if</span><span style="color: #d0d0d0">((PINB</span> <span style="color: #d0d0d0">&amp;</span> <span style="color: #3677a9">0x0F</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">0x0B</span><span style="color: #d0d0d0">)</span>
+		<span style="color: #d0d0d0">{</span>
+			<span style="color: #d0d0d0">key_pressed</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;b&#39;</span><span style="color: #d0d0d0">;</span>
+		<span style="color: #d0d0d0">}</span>
+		<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #6ab825; font-weight: bold">if</span><span style="color: #d0d0d0">((PINB</span> <span style="color: #d0d0d0">&amp;</span> <span style="color: #3677a9">0x0F</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">0x0A</span><span style="color: #d0d0d0">)</span>
+		<span style="color: #d0d0d0">{</span>
+			<span style="color: #d0d0d0">key_pressed</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;a&#39;</span><span style="color: #d0d0d0">;</span>
+		<span style="color: #d0d0d0">}</span>
+		<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #6ab825; font-weight: bold">if</span><span style="color: #d0d0d0">((PINB</span> <span style="color: #d0d0d0">&amp;</span> <span style="color: #3677a9">0x0F</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">0x09</span><span style="color: #d0d0d0">)</span>
+		<span style="color: #d0d0d0">{</span>
+			<span style="color: #d0d0d0">key_pressed</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;9&#39;</span><span style="color: #d0d0d0">;</span>
+		<span style="color: #d0d0d0">}</span>
+		<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #6ab825; font-weight: bold">if</span><span style="color: #d0d0d0">((PINB</span> <span style="color: #d0d0d0">&amp;</span> <span style="color: #3677a9">0x0F</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">0x08</span><span style="color: #d0d0d0">)</span>
+		<span style="color: #d0d0d0">{</span>
+			<span style="color: #d0d0d0">key_pressed</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;8&#39;</span><span style="color: #d0d0d0">;</span>
+		<span style="color: #d0d0d0">}</span>
+		<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #6ab825; font-weight: bold">if</span><span style="color: #d0d0d0">((PINB</span> <span style="color: #d0d0d0">&amp;</span> <span style="color: #3677a9">0x0F</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">0x07</span><span style="color: #d0d0d0">)</span> 
+		<span style="color: #d0d0d0">{</span>
+			<span style="color: #d0d0d0">key_pressed</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;7&#39;</span><span style="color: #d0d0d0">;</span>
+		<span style="color: #d0d0d0">}</span>
+		<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #6ab825; font-weight: bold">if</span><span style="color: #d0d0d0">((PINB</span> <span style="color: #d0d0d0">&amp;</span> <span style="color: #3677a9">0x0F</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">0x06</span><span style="color: #d0d0d0">)</span>
+		<span style="color: #d0d0d0">{</span>
+			<span style="color: #d0d0d0">key_pressed</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;6&#39;</span><span style="color: #d0d0d0">;</span>
+		<span style="color: #d0d0d0">}</span>
+		<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #6ab825; font-weight: bold">if</span><span style="color: #d0d0d0">((PINB</span> <span style="color: #d0d0d0">&amp;</span> <span style="color: #3677a9">0x0F</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">0x05</span><span style="color: #d0d0d0">)</span>
+		<span style="color: #d0d0d0">{</span>
+			<span style="color: #d0d0d0">key_pressed</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;5&#39;</span><span style="color: #d0d0d0">;</span>
+		<span style="color: #d0d0d0">}</span>
+		<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #6ab825; font-weight: bold">if</span><span style="color: #d0d0d0">((PINB</span> <span style="color: #d0d0d0">&amp;</span> <span style="color: #3677a9">0x0F</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">0x04</span><span style="color: #d0d0d0">)</span>
+		<span style="color: #d0d0d0">{</span>
+			<span style="color: #d0d0d0">key_pressed</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;4&#39;</span><span style="color: #d0d0d0">;</span>
+		<span style="color: #d0d0d0">}</span>
+		<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #6ab825; font-weight: bold">if</span><span style="color: #d0d0d0">((PINB</span> <span style="color: #d0d0d0">&amp;</span> <span style="color: #3677a9">0x0F</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">0x03</span><span style="color: #d0d0d0">)</span>
+		<span style="color: #d0d0d0">{</span>
+			<span style="color: #d0d0d0">key_pressed</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;3&#39;</span><span style="color: #d0d0d0">;</span>
+		<span style="color: #d0d0d0">}</span>
+		<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #6ab825; font-weight: bold">if</span><span style="color: #d0d0d0">((PINB</span> <span style="color: #d0d0d0">&amp;</span> <span style="color: #3677a9">0x0F</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">0x02</span><span style="color: #d0d0d0">)</span>
+		<span style="color: #d0d0d0">{</span>
+			<span style="color: #d0d0d0">key_pressed</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;2&#39;</span><span style="color: #d0d0d0">;</span>
+		<span style="color: #d0d0d0">}</span>
+		<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #6ab825; font-weight: bold">if</span><span style="color: #d0d0d0">((PINB</span> <span style="color: #d0d0d0">&amp;</span> <span style="color: #3677a9">0x0F</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">0x01</span><span style="color: #d0d0d0">)</span>
+		<span style="color: #d0d0d0">{</span>
+			<span style="color: #d0d0d0">key_pressed</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;1&#39;</span><span style="color: #d0d0d0">;</span>
+		<span style="color: #d0d0d0">}</span>
+		<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">((PINB</span> <span style="color: #d0d0d0">&amp;</span> <span style="color: #3677a9">0x0F</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">0x00</span><span style="color: #d0d0d0">)</span>
+		<span style="color: #d0d0d0">{</span>
+			<span style="color: #d0d0d0">key_pressed</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;0&#39;</span><span style="color: #d0d0d0">;</span>
+		<span style="color: #d0d0d0">}</span>
+		<span style="color: #d0d0d0">PORTA</span> <span style="color: #d0d0d0">|=</span> <span style="color: #d0d0d0">_BV(PA5);</span> <span style="color: #999999; font-style: italic">// disable keyboard				  				  				  				  				 </span>
+	<span style="color: #d0d0d0">}</span>
+	<span style="color: #6ab825; font-weight: bold">return</span> <span style="color: #d0d0d0">key_pressed;</span>	
+<span style="color: #d0d0d0">}</span>
+<span style="color: #999999; font-style: italic">/*******************************************************************</span>
+<span style="color: #999999; font-style: italic">*</span>
+<span style="color: #999999; font-style: italic">*						CLOCK FUNCTIONS</span>
+<span style="color: #999999; font-style: italic">*</span>
+<span style="color: #999999; font-style: italic">********************************************************************/</span>
+<span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #447fcf">enter_set_clock</span><span style="color: #d0d0d0">(</span><span style="color: #6ab825; font-weight: bold">void</span><span style="color: #d0d0d0">)</span> <span style="color: #999999; font-style: italic">// When going to the set clock state in the state machine.</span>
+<span style="color: #d0d0d0">{</span>
+	<span style="color: #d0d0d0">write_to_display(</span><span style="color: #ed9d13">&quot;Clock settings&quot;</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">0</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+	<span style="color: #d0d0d0">write_to_display(</span><span style="color: #ed9d13">&quot;Time: &quot;</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">0</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+	<span style="color: #d0d0d0">display_time();</span> <span style="color: #999999; font-style: italic">// Displays the time</span>
+<span style="color: #d0d0d0">}</span>
+
+
+<span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #447fcf">clock_init</span><span style="color: #d0d0d0">()</span> <span style="color: #999999; font-style: italic">// Config clock </span>
+<span style="color: #d0d0d0">{</span>
+	<span style="color: #999999; font-style: italic">// CTR</span>
+	<span style="color: #d0d0d0">TIMSK</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">_BV(OCIE1A);</span> <span style="color: #999999; font-style: italic">// Interrupt when the timer value for timer 1 is the same as A</span>
+	<span style="color: #d0d0d0">TCCR1A</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">_BV(WGM01);</span> <span style="color: #999999; font-style: italic">// Clears timer register on compare.</span>
+	<span style="color: #d0d0d0">TCNT1</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">// Reset the timer register for counting. </span>
+	<span style="color: #d0d0d0">TCCR1B</span> <span style="color: #d0d0d0">|=</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">1</span> <span style="color: #d0d0d0">&lt;&lt;</span> <span style="color: #d0d0d0">WGM12)</span> <span style="color: #d0d0d0">|</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">1</span> <span style="color: #d0d0d0">&lt;&lt;</span> <span style="color: #d0d0d0">CS12)</span> <span style="color: #d0d0d0">|</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">1</span> <span style="color: #d0d0d0">&lt;&lt;</span> <span style="color: #d0d0d0">CS10);</span> <span style="color: #999999; font-style: italic">// prescaling 1024</span>
+	<span style="color: #d0d0d0">OCR1A</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">58688</span><span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">// compare value</span>
+	<span style="color: #d0d0d0">sei();</span> <span style="color: #999999; font-style: italic">// Enables everything for interrupts</span>
+<span style="color: #d0d0d0">}</span>
+<span style="color: #d0d0d0">ISR(TIMER1_COMPA_vect)</span> 
+<span style="color: #d0d0d0">{</span>
+	<span style="color: #d0d0d0">minute_passed_ones</span> <span style="color: #d0d0d0">++;</span>	
+	<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(minute_passed_ones</span> <span style="color: #d0d0d0">&gt;=</span> <span style="color: #3677a9">10</span><span style="color: #d0d0d0">)</span> <span style="color: #999999; font-style: italic">// NOTE: &#39;&gt;=&#39; used instead of &#39;==&#39;</span>
+	<span style="color: #d0d0d0">{</span>
+		<span style="color: #d0d0d0">minute_passed_ones</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">;</span>
+		<span style="color: #d0d0d0">minute_passed_tens</span> <span style="color: #d0d0d0">++;</span>
+		<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(minute_passed_tens</span> <span style="color: #d0d0d0">&gt;=</span> <span style="color: #3677a9">6</span><span style="color: #d0d0d0">)</span>
+		<span style="color: #d0d0d0">{</span>
+			<span style="color: #d0d0d0">minute_passed_tens</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">;</span>
+			<span style="color: #d0d0d0">hour_passed_ones</span> <span style="color: #d0d0d0">++;</span>
+			<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(hour_passed_ones</span> <span style="color: #d0d0d0">&gt;=</span> <span style="color: #3677a9">10</span> <span style="color: #d0d0d0">&amp;&amp;</span> <span style="color: #d0d0d0">hour_passed_tens</span> <span style="color: #d0d0d0">&lt;</span> <span style="color: #3677a9">2</span><span style="color: #d0d0d0">)</span>
+			<span style="color: #d0d0d0">{</span>
+				<span style="color: #d0d0d0">hour_passed_ones</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">;</span>
+				<span style="color: #d0d0d0">hour_passed_tens</span> <span style="color: #d0d0d0">++;</span>
+			<span style="color: #d0d0d0">}</span>
+			<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(hour_passed_ones</span> <span style="color: #d0d0d0">&gt;=</span> <span style="color: #3677a9">4</span> <span style="color: #d0d0d0">&amp;&amp;</span> <span style="color: #d0d0d0">hour_passed_tens</span> <span style="color: #d0d0d0">&gt;=</span> <span style="color: #3677a9">2</span><span style="color: #d0d0d0">)</span>
+			<span style="color: #d0d0d0">{</span>
+				<span style="color: #d0d0d0">hour_passed_tens</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">// reset time</span>
+				<span style="color: #d0d0d0">hour_passed_ones</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">// reset time.</span>
+			<span style="color: #d0d0d0">}</span>
+		<span style="color: #d0d0d0">}</span>
+
+	<span style="color: #d0d0d0">}</span>
+
+<span style="color: #d0d0d0">}</span>
+<span style="color: #999999; font-style: italic">/*******************************************************************</span>
+<span style="color: #999999; font-style: italic">*</span>
+<span style="color: #999999; font-style: italic">*						STATE FUNCTIONS</span>
+<span style="color: #999999; font-style: italic">*</span>
+<span style="color: #999999; font-style: italic">********************************************************************/</span>
+<span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #d0d0d0">larm_off(</span><span style="color: #6ab825; font-weight: bold">void</span><span style="color: #d0d0d0">)</span>
+<span style="color: #d0d0d0">{</span>
+	<span style="color: #d0d0d0">code_entered_one</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;k&#39;</span><span style="color: #d0d0d0">;</span>
+	<span style="color: #d0d0d0">code_entered_two</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;k&#39;</span><span style="color: #d0d0d0">;</span>
+	<span style="color: #d0d0d0">code_entered_three</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;k&#39;</span><span style="color: #d0d0d0">;</span>
+	<span style="color: #d0d0d0">test_mode</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">;</span>
+	<span style="color: #d0d0d0">larm_state</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">// The alarm gets turned off.</span>
+	<span style="color: #d0d0d0">PORTA</span> <span style="color: #d0d0d0">&amp;=</span> <span style="color: #d0d0d0">~_BV(PA7);</span> <span style="color: #999999; font-style: italic">// led turned off.</span>
+	<span style="color: #d0d0d0">clear_display(</span><span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+	<span style="color: #d0d0d0">clear_display(</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">);</span>
+<span style="color: #d0d0d0">}</span>
+<span style="color: #999999; font-style: italic">/*******************************************************************</span>
+<span style="color: #999999; font-style: italic">*</span>
+<span style="color: #999999; font-style: italic">*						MAIN </span>
+<span style="color: #999999; font-style: italic">*</span>
+<span style="color: #999999; font-style: italic">********************************************************************/</span>
+
+   
+   <span style="color: #999999; font-style: italic">// Analog signals: A0-A3</span>
+   <span style="color: #999999; font-style: italic">// Data bus: B0-B7. (Digitala signaler in, Display out, Knappsats in 4 bits)</span>
+   <span style="color: #999999; font-style: italic">// CS : A4 - A7 (out). A4 = Buffer enable, A5 = keyboard enable. D7 = Display Enable</span>
+   <span style="color: #999999; font-style: italic">// DA : D6 (in).</span>
+   <span style="color: #999999; font-style: italic">// Diod: A7 (out)</span>
+   <span style="color: #999999; font-style: italic">// Display extra: D5 (out)</span>
+   <span style="color: #999999; font-style: italic">// Larm central: D0 (in), D1 (out)</span>
+   <span style="color: #999999; font-style: italic">// Siren: D4 (out)</span>
+   <span style="color: #999999; font-style: italic">// latch enable buffer: A6 (out)</span>
+
+
+	   
+<span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #d0d0d0">main(</span><span style="color: #6ab825; font-weight: bold">void</span><span style="color: #d0d0d0">)</span>
+<span style="color: #d0d0d0">{</span>
+	<span style="color: #d0d0d0">clock_init();</span> <span style="color: #999999; font-style: italic">// Configs everything with the 1 minute timer</span>
+	<span style="color: #d0d0d0">lcd_init();</span> <span style="color: #999999; font-style: italic">//</span>
+	   
+	<span style="color: #d0d0d0">DDRA</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0xF0</span><span style="color: #d0d0d0">;</span> 
+    <span style="color: #999999; font-style: italic">/*A0 - A3 = Analoga in. </span>
+<span style="color: #999999; font-style: italic">    A4 = Enable buffer out, </span>
+<span style="color: #999999; font-style: italic">    A5= Enable Keyboard out, </span>
+<span style="color: #999999; font-style: italic">    D7 = enable display out</span>
+<span style="color: #999999; font-style: italic">    */</span>
+	<span style="color: #d0d0d0">DDRB</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0x00</span><span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">// All data buss ports are inputs as default.</span>
+		 
+	<span style="color: #d0d0d0">DDRD</span> <span style="color: #d0d0d0">|=</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">1</span> <span style="color: #d0d0d0">&lt;&lt;</span> <span style="color: #d0d0d0">PD7)</span>  <span style="color: #d0d0d0">|</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">1</span> <span style="color: #d0d0d0">&lt;&lt;</span> <span style="color: #d0d0d0">PD5)</span> <span style="color: #d0d0d0">|</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">1</span> <span style="color: #d0d0d0">&lt;&lt;</span> <span style="color: #d0d0d0">PD4)</span> <span style="color: #d0d0d0">|</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">1</span> <span style="color: #d0d0d0">&lt;&lt;</span> <span style="color: #d0d0d0">PD1);</span> 
+    <span style="color: #999999; font-style: italic">/* D7 = Display EN </span>
+<span style="color: #999999; font-style: italic">    D5 = Display RS. </span>
+<span style="color: #999999; font-style: italic">    D4= Siren. </span>
+<span style="color: #999999; font-style: italic">    D1= Larm central ut. </span>
+<span style="color: #999999; font-style: italic">    D0 = Larm central in</span>
+<span style="color: #999999; font-style: italic">    */</span>
+    
+	<span style="color: #d0d0d0">PORTA</span> <span style="color: #d0d0d0">|=</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">1</span> <span style="color: #d0d0d0">&lt;&lt;</span> <span style="color: #d0d0d0">PA4);</span>
+	<span style="color: #d0d0d0">PORTA</span> <span style="color: #d0d0d0">|=</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">1</span> <span style="color: #d0d0d0">&lt;&lt;</span> <span style="color: #d0d0d0">PA5);</span>
+	<span style="color: #d0d0d0">PORTD</span> <span style="color: #d0d0d0">&amp;=</span> <span style="color: #d0d0d0">~_BV(PD7);</span>
+	<span style="color: #d0d0d0">ADMUX</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">&lt;&lt;REFS0);</span>
+	<span style="color: #d0d0d0">ADMUX</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">ADMUX</span> <span style="color: #d0d0d0">&amp;</span> <span style="color: #3677a9">0xf8</span><span style="color: #d0d0d0">;</span>
+	<span style="color: #d0d0d0">ADCSRA</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">&lt;&lt;ADEN)</span> <span style="color: #d0d0d0">|</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">&lt;&lt;ADPS2);</span>
+
+	<span style="color: #6ab825; font-weight: bold">while</span><span style="color: #d0d0d0">(</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">)</span>
+	<span style="color: #d0d0d0">{</span>	
+		<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(test_mode</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">write_to_display_char(</span><span style="color: #ed9d13">&#39;T&#39;</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">15</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+		<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #447fcf">write_to_display_char</span><span style="color: #d0d0d0">(</span><span style="color: #ed9d13">&#39;N&#39;</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">15</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+			
+		<span style="color: #6ab825; font-weight: bold">char</span> <span style="color: #6ab825; font-weight: bold">volatile</span> <span style="color: #d0d0d0">larm_num</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&#39;0&#39;</span><span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">// By default. </span>
+        <span style="color: #999999; font-style: italic">/* The alarm has not been triggered for the first time,since start or off code enter. </span>
+<span style="color: #999999; font-style: italic">        State 0 doesn&#39;t need to check the alarm either. </span>
+<span style="color: #999999; font-style: italic">        State 9 and up does not trigger the alarm either */</span>
+		<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(larm_state</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">0</span> <span style="color: #d0d0d0">&amp;&amp;</span> <span style="color: #d0d0d0">state</span> <span style="color: #d0d0d0">!=</span> <span style="color: #3677a9">0</span> <span style="color: #d0d0d0">&amp;&amp;</span> <span style="color: #d0d0d0">state</span> <span style="color: #d0d0d0">&lt;=</span> <span style="color: #3677a9">8</span><span style="color: #d0d0d0">)</span> 
+		<span style="color: #d0d0d0">{</span>
+			<span style="color: #d0d0d0">larm_num</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">check_larm();</span>
+		<span style="color: #d0d0d0">}</span>
+		<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(larm_num</span> <span style="color: #d0d0d0">!=</span> <span style="color: #ed9d13">&#39;0&#39;</span> <span style="color: #d0d0d0">&amp;&amp;</span> <span style="color: #d0d0d0">state</span> <span style="color: #d0d0d0">!=</span> <span style="color: #3677a9">0</span> <span style="color: #d0d0d0">&amp;&amp;</span> <span style="color: #d0d0d0">larm_state</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">)</span>
+		<span style="color: #d0d0d0">{</span>
+			<span style="color: #d0d0d0">clear_display(</span><span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span> <span style="color: #999999; font-style: italic">// clears row 0</span>
+			<span style="color: #d0d0d0">larm_on(larm_num);</span>
+		<span style="color: #d0d0d0">}</span>
+        <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(larm_state</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">1</span> <span style="color: #d0d0d0">&amp;&amp;</span> <span style="color: #d0d0d0">test_mode</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">)</span> 
+		<span style="color: #d0d0d0">{</span>  <span style="color: #999999; font-style: italic">// If the alarm is triggered and we are not testing.</span>
+			<span style="color: #d0d0d0">buzz();</span> <span style="color: #999999; font-style: italic">// Activates the siren</span>
+		<span style="color: #d0d0d0">}</span>
+		<span style="color: #6ab825; font-weight: bold">char</span> <span style="color: #6ab825; font-weight: bold">volatile</span> <span style="color: #d0d0d0">key_num</span> <span style="color: #d0d0d0">=check_keyboard();</span>	
+		<span style="color: #6ab825; font-weight: bold">switch</span> <span style="color: #d0d0d0">(state)</span>
+		<span style="color: #d0d0d0">{</span>
+			<span style="color: #6ab825; font-weight: bold">case</span> <span style="color: #3677a9">0</span>: <span style="color: #999999; font-style: italic">// OFF</span>
+				<span style="color: #d0d0d0">write_to_display(</span><span style="color: #ed9d13">&quot;OFF STATE&quot;</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">0</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+				<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(key_num</span> <span style="color: #d0d0d0">==</span> <span style="color: #ed9d13">&#39;c&#39;</span><span style="color: #d0d0d0">)</span> <span style="color: #999999; font-style: italic">// On button</span>
+				<span style="color: #d0d0d0">{</span>
+					<span style="color: #d0d0d0">state</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">// On state.</span>
+				<span style="color: #d0d0d0">}</span>
+				<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(key_num</span> <span style="color: #d0d0d0">==</span> <span style="color: #ed9d13">&#39;e&#39;</span><span style="color: #d0d0d0">){</span> <span style="color: #999999; font-style: italic">// test button</span>
+					<span style="color: #d0d0d0">state</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">;</span>
+					<span style="color: #d0d0d0">test_mode</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">// Siren won&#39;t run</span>
+				<span style="color: #d0d0d0">}</span>
+				<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(key_num</span> <span style="color: #d0d0d0">==</span> <span style="color: #ed9d13">&#39;f&#39;</span><span style="color: #d0d0d0">)</span> <span style="color: #999999; font-style: italic">// Set clk</span>
+				<span style="color: #d0d0d0">{</span>
+					<span style="color: #d0d0d0">enter_set_clock();</span> <span style="color: #999999; font-style: italic">// Sets the text and displays the time.</span>
+					<span style="color: #d0d0d0">state</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">9</span><span style="color: #d0d0d0">;</span>
+				<span style="color: #d0d0d0">}</span>
+				<span style="color: #6ab825; font-weight: bold">break</span><span style="color: #d0d0d0">;</span>
+			<span style="color: #6ab825; font-weight: bold">case</span> <span style="color: #3677a9">1</span>: <span style="color: #999999; font-style: italic">// state on</span>
+				<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(larm_state</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">write_to_display(</span><span style="color: #ed9d13">&quot;Alarm enabled&quot;</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">0</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span> 
+
+				<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(larm_num</span> <span style="color: #d0d0d0">!=</span> <span style="color: #ed9d13">&#39;0&#39;</span><span style="color: #d0d0d0">)</span> <span style="color: #999999; font-style: italic">// If alarm on. </span>
+				<span style="color: #d0d0d0">{</span>
+					<span style="color: #d0d0d0">state</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">2</span><span style="color: #d0d0d0">;</span>
+				<span style="color: #d0d0d0">}</span>
+				<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(key_num</span> <span style="color: #d0d0d0">==</span> <span style="color: #ed9d13">&#39;d&#39;</span><span style="color: #d0d0d0">)</span> <span style="color: #999999; font-style: italic">// off button</span>
+				<span style="color: #d0d0d0">{</span>
+					<span style="color: #d0d0d0">clear_display(</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">);</span> <span style="color: #999999; font-style: italic">// clears row 0</span>
+					<span style="color: #d0d0d0">write_to_display(</span><span style="color: #ed9d13">&quot;code: &quot;</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+					<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(test_mode</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">state</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">3</span><span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">// GO to enter keys.</span>
+					<span style="color: #6ab825; font-weight: bold">else</span>
+					<span style="color: #d0d0d0">{</span>
+						<span style="color: #d0d0d0">state</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">;</span>
+						<span style="color: #d0d0d0">larm_off();</span>
+					<span style="color: #d0d0d0">}</span>
+				<span style="color: #d0d0d0">}</span>
+				<span style="color: #6ab825; font-weight: bold">break</span><span style="color: #d0d0d0">;</span>
+					
+			<span style="color: #6ab825; font-weight: bold">case</span> <span style="color: #3677a9">2</span>: <span style="color: #999999; font-style: italic">// Larm is on state</span>
+				<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(key_num</span> <span style="color: #d0d0d0">==</span> <span style="color: #ed9d13">&#39;d&#39;</span><span style="color: #d0d0d0">)</span> <span style="color: #999999; font-style: italic">// off button</span>
+				<span style="color: #d0d0d0">{</span>
+					<span style="color: #d0d0d0">clear_display(</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">);</span> <span style="color: #999999; font-style: italic">// clears row 0</span>
+					<span style="color: #d0d0d0">write_to_display(</span><span style="color: #ed9d13">&quot;code: &quot;</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+					<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(test_mode</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">state</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">3</span><span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">// GO to enter keys.</span>
+					<span style="color: #6ab825; font-weight: bold">else</span> 
+					<span style="color: #d0d0d0">{</span>
+						<span style="color: #d0d0d0">state</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">;</span>
+						<span style="color: #d0d0d0">larm_off();</span>
+					<span style="color: #d0d0d0">}</span>
+				<span style="color: #d0d0d0">}</span>
+				<span style="color: #6ab825; font-weight: bold">break</span><span style="color: #d0d0d0">;</span>
+					
+			<span style="color: #6ab825; font-weight: bold">case</span> <span style="color: #3677a9">3</span>: <span style="color: #999999; font-style: italic">// HOld state</span>
+				<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(key_num</span> <span style="color: #d0d0d0">==</span> <span style="color: #ed9d13">&#39;k&#39;</span><span style="color: #d0d0d0">){</span>
+					<span style="color: #d0d0d0">state</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">4</span><span style="color: #d0d0d0">;</span>
+				<span style="color: #d0d0d0">}</span>					
+				<span style="color: #6ab825; font-weight: bold">break</span><span style="color: #d0d0d0">;</span>
+					
+			<span style="color: #6ab825; font-weight: bold">case</span> <span style="color: #3677a9">4</span>: <span style="color: #999999; font-style: italic">// key 1 wait</span>
+				<span style="color: #6ab825; font-weight: bold">if</span><span style="color: #d0d0d0">(key_num</span> <span style="color: #d0d0d0">&gt;=</span> <span style="color: #ed9d13">&#39;0&#39;</span> <span style="color: #d0d0d0">&amp;&amp;</span> <span style="color: #d0d0d0">key_num</span> <span style="color: #d0d0d0">&lt;=</span> <span style="color: #ed9d13">&#39;9&#39;</span><span style="color: #d0d0d0">){</span> <span style="color: #999999; font-style: italic">// 0-0</span>
+						
+					<span style="color: #d0d0d0">code_entered_one</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">key_num;</span>
+					<span style="color: #d0d0d0">write_to_display_char(key_num,</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">6</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+					<span style="color: #d0d0d0">state</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">5</span><span style="color: #d0d0d0">;</span>
+				<span style="color: #d0d0d0">}</span>
+				<span style="color: #6ab825; font-weight: bold">break</span><span style="color: #d0d0d0">;</span>
+					
+			<span style="color: #6ab825; font-weight: bold">case</span> <span style="color: #3677a9">5</span>: <span style="color: #999999; font-style: italic">// key 1 hold</span>
+				<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(key_num</span> <span style="color: #d0d0d0">==</span> <span style="color: #ed9d13">&#39;k&#39;</span><span style="color: #d0d0d0">){</span>
+					<span style="color: #d0d0d0">state</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">6</span><span style="color: #d0d0d0">;</span>
+				<span style="color: #d0d0d0">}</span>
+				<span style="color: #6ab825; font-weight: bold">break</span><span style="color: #d0d0d0">;</span>
+					
+			<span style="color: #6ab825; font-weight: bold">case</span> <span style="color: #3677a9">6</span>: <span style="color: #999999; font-style: italic">// key 2 wait</span>
+				<span style="color: #6ab825; font-weight: bold">if</span><span style="color: #d0d0d0">(key_num</span> <span style="color: #d0d0d0">&gt;=</span> <span style="color: #ed9d13">&#39;0&#39;</span> <span style="color: #d0d0d0">&amp;&amp;</span> <span style="color: #d0d0d0">key_num</span> <span style="color: #d0d0d0">&lt;=</span> <span style="color: #ed9d13">&#39;9&#39;</span><span style="color: #d0d0d0">){</span>
+					<span style="color: #d0d0d0">code_entered_two</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">key_num;</span>
+					<span style="color: #d0d0d0">write_to_display_char(key_num,</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">7</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+					<span style="color: #d0d0d0">state</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">7</span><span style="color: #d0d0d0">;</span>
+				<span style="color: #d0d0d0">}</span>
+				<span style="color: #6ab825; font-weight: bold">break</span><span style="color: #d0d0d0">;</span>
+					
+			<span style="color: #6ab825; font-weight: bold">case</span> <span style="color: #3677a9">7</span>: <span style="color: #999999; font-style: italic">// key 2 hold</span>
+				<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(key_num</span> <span style="color: #d0d0d0">==</span> <span style="color: #ed9d13">&#39;k&#39;</span><span style="color: #d0d0d0">){</span>
+					<span style="color: #d0d0d0">state</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">8</span><span style="color: #d0d0d0">;</span>
+				<span style="color: #d0d0d0">}</span>
+				<span style="color: #6ab825; font-weight: bold">break</span><span style="color: #d0d0d0">;</span>
+				
+			<span style="color: #6ab825; font-weight: bold">case</span> <span style="color: #3677a9">8</span>: <span style="color: #999999; font-style: italic">// key 3 wait</span>
+				<span style="color: #6ab825; font-weight: bold">if</span><span style="color: #d0d0d0">(key_num</span> <span style="color: #d0d0d0">&gt;=</span> <span style="color: #ed9d13">&#39;0&#39;</span> <span style="color: #d0d0d0">&amp;&amp;</span> <span style="color: #d0d0d0">key_num</span> <span style="color: #d0d0d0">&lt;=</span> <span style="color: #ed9d13">&#39;9&#39;</span><span style="color: #d0d0d0">){</span>
+					<span style="color: #d0d0d0">code_entered_three</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">key_num;</span>
+					<span style="color: #d0d0d0">write_to_display_char(key_num,</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">8</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+					<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(code_entered_one</span> <span style="color: #d0d0d0">==</span> <span style="color: #d0d0d0">code_correct_one</span> 
+                    	<span style="color: #d0d0d0">&amp;&amp;</span> <span style="color: #d0d0d0">code_entered_two</span> <span style="color: #d0d0d0">==</span> <span style="color: #d0d0d0">code_correct_two</span>
+                    	<span style="color: #d0d0d0">&amp;&amp;</span> <span style="color: #d0d0d0">code_entered_three</span> <span style="color: #d0d0d0">==</span> <span style="color: #d0d0d0">code_correct_three</span> <span style="color: #d0d0d0">)</span>
+					<span style="color: #d0d0d0">{</span>
+						<span style="color: #d0d0d0">state</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">;</span>
+						<span style="color: #d0d0d0">larm_off();</span>
+					<span style="color: #d0d0d0">}</span>
+					<span style="color: #6ab825; font-weight: bold">else</span>
+					<span style="color: #d0d0d0">{</span>
+						<span style="color: #d0d0d0">clear_display(</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">);</span>
+						<span style="color: #d0d0d0">write_to_display(</span><span style="color: #ed9d13">&quot;Wrong code&quot;</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">0</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+						<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(larm_state</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">state</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">2</span><span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">// The alarm is running so back to state 2.</span>
+						<span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #d0d0d0">state</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">// The alarm has not yet been triggered. Going back. </span>
+					<span style="color: #d0d0d0">}</span>
+				<span style="color: #d0d0d0">}</span>					
+				<span style="color: #6ab825; font-weight: bold">break</span><span style="color: #d0d0d0">;</span>
+			<span style="color: #6ab825; font-weight: bold">case</span> <span style="color: #3677a9">9</span>: <span style="color: #999999; font-style: italic">// Hold set clk button</span>
+				<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(key_num</span> <span style="color: #d0d0d0">==</span> <span style="color: #ed9d13">&#39;k&#39;</span><span style="color: #d0d0d0">){</span>
+					<span style="color: #d0d0d0">state</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">10</span><span style="color: #d0d0d0">;</span>
+				<span style="color: #d0d0d0">}</span>
+				<span style="color: #6ab825; font-weight: bold">break</span><span style="color: #d0d0d0">;</span>
+			<span style="color: #6ab825; font-weight: bold">case</span> <span style="color: #3677a9">10</span>: <span style="color: #999999; font-style: italic">// Set clk hour (tens)</span>
+				<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(key_num</span> <span style="color: #d0d0d0">&gt;=</span> <span style="color: #ed9d13">&#39;0&#39;</span> <span style="color: #d0d0d0">&amp;&amp;</span> <span style="color: #d0d0d0">key_num</span> <span style="color: #d0d0d0">&lt;=</span> <span style="color: #ed9d13">&#39;2&#39;</span><span style="color: #d0d0d0">)</span>
+				<span style="color: #d0d0d0">{</span>
+					<span style="color: #d0d0d0">hour_passed_tens</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">(</span><span style="color: #6ab825; font-weight: bold">int</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">(key_num</span> <span style="color: #d0d0d0">-</span> <span style="color: #ed9d13">&#39;0&#39;</span><span style="color: #d0d0d0">);</span>
+					<span style="color: #d0d0d0">display_time();</span>
+					<span style="color: #d0d0d0">state</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">11</span><span style="color: #d0d0d0">;</span>
+				<span style="color: #d0d0d0">}</span>
+				<span style="color: #6ab825; font-weight: bold">break</span><span style="color: #d0d0d0">;</span>
+					
+			<span style="color: #6ab825; font-weight: bold">case</span> <span style="color: #3677a9">11</span>: <span style="color: #999999; font-style: italic">// Hold</span>
+				<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(key_num</span> <span style="color: #d0d0d0">==</span> <span style="color: #ed9d13">&#39;k&#39;</span><span style="color: #d0d0d0">){</span>
+					<span style="color: #d0d0d0">state</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">12</span><span style="color: #d0d0d0">;</span>
+				<span style="color: #d0d0d0">}</span>
+			<span style="color: #6ab825; font-weight: bold">break</span><span style="color: #d0d0d0">;</span>
+				
+			<span style="color: #6ab825; font-weight: bold">case</span> <span style="color: #3677a9">12</span>: <span style="color: #999999; font-style: italic">// set clk hour (ones)</span>
+				<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">((hour_passed_tens</span> <span style="color: #d0d0d0">&lt;</span> <span style="color: #3677a9">2</span> <span style="color: #d0d0d0">&amp;&amp;</span> <span style="color: #d0d0d0">key_num</span> <span style="color: #d0d0d0">&gt;=</span> <span style="color: #ed9d13">&#39;0&#39;</span> <span style="color: #d0d0d0">&amp;&amp;</span> <span style="color: #d0d0d0">key_num</span> <span style="color: #d0d0d0">&lt;=</span> <span style="color: #ed9d13">&#39;9&#39;</span><span style="color: #d0d0d0">)</span> 
+                	<span style="color: #d0d0d0">||</span> <span style="color: #d0d0d0">(hour_passed_tens</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">2</span> <span style="color: #d0d0d0">&amp;&amp;</span> <span style="color: #d0d0d0">key_num</span> <span style="color: #d0d0d0">&gt;=</span> <span style="color: #ed9d13">&#39;0&#39;</span> <span style="color: #d0d0d0">&amp;&amp;</span> <span style="color: #d0d0d0">key_num</span> <span style="color: #d0d0d0">&lt;=</span> <span style="color: #ed9d13">&#39;3&#39;</span> <span style="color: #d0d0d0">))</span>
+				<span style="color: #d0d0d0">{</span>
+					<span style="color: #d0d0d0">hour_passed_ones</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">(</span><span style="color: #6ab825; font-weight: bold">int</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">(key_num</span> <span style="color: #d0d0d0">-</span> <span style="color: #ed9d13">&#39;0&#39;</span><span style="color: #d0d0d0">);</span>
+					<span style="color: #d0d0d0">clear_display(</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">);</span>
+					<span style="color: #d0d0d0">display_time();</span>
+					<span style="color: #d0d0d0">state</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">13</span><span style="color: #d0d0d0">;</span>
+						
+				<span style="color: #d0d0d0">}</span>				
+				<span style="color: #6ab825; font-weight: bold">break</span><span style="color: #d0d0d0">;</span>
+					
+			<span style="color: #6ab825; font-weight: bold">case</span> <span style="color: #3677a9">13</span>: <span style="color: #999999; font-style: italic">// Hold</span>
+				<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(key_num</span> <span style="color: #d0d0d0">==</span> <span style="color: #ed9d13">&#39;k&#39;</span><span style="color: #d0d0d0">){</span>
+					<span style="color: #d0d0d0">state</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">14</span><span style="color: #d0d0d0">;</span>
+				<span style="color: #d0d0d0">}</span>
+			<span style="color: #6ab825; font-weight: bold">break</span><span style="color: #d0d0d0">;</span>
+				
+			<span style="color: #6ab825; font-weight: bold">case</span> <span style="color: #3677a9">14</span>: <span style="color: #999999; font-style: italic">// Set clk minutes (tens)</span>
+				<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(key_num</span> <span style="color: #d0d0d0">&gt;=</span> <span style="color: #ed9d13">&#39;0&#39;</span> <span style="color: #d0d0d0">&amp;&amp;</span> <span style="color: #d0d0d0">key_num</span> <span style="color: #d0d0d0">&lt;=</span> <span style="color: #ed9d13">&#39;5&#39;</span><span style="color: #d0d0d0">)</span>
+				<span style="color: #d0d0d0">{</span>
+					<span style="color: #d0d0d0">minute_passed_tens</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">(</span><span style="color: #6ab825; font-weight: bold">int</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">(key_num</span> <span style="color: #d0d0d0">-</span> <span style="color: #ed9d13">&#39;0&#39;</span><span style="color: #d0d0d0">);</span>
+					<span style="color: #d0d0d0">clear_display(</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">);</span>
+					<span style="color: #d0d0d0">display_time();</span>
+					<span style="color: #d0d0d0">state</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">15</span><span style="color: #d0d0d0">;</span>
+						
+				<span style="color: #d0d0d0">}</span>					
+				<span style="color: #6ab825; font-weight: bold">break</span><span style="color: #d0d0d0">;</span>
+					
+			<span style="color: #6ab825; font-weight: bold">case</span> <span style="color: #3677a9">15</span>: <span style="color: #999999; font-style: italic">// Hold</span>
+				<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(key_num</span> <span style="color: #d0d0d0">==</span> <span style="color: #ed9d13">&#39;k&#39;</span><span style="color: #d0d0d0">){</span>
+					<span style="color: #d0d0d0">state</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">16</span><span style="color: #d0d0d0">;</span>
+				<span style="color: #d0d0d0">}</span>
+				<span style="color: #6ab825; font-weight: bold">break</span><span style="color: #d0d0d0">;</span>
+					
+			<span style="color: #6ab825; font-weight: bold">case</span> <span style="color: #3677a9">16</span>: <span style="color: #999999; font-style: italic">// set clk minutes (ones)</span>
+				<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(key_num</span> <span style="color: #d0d0d0">&gt;=</span> <span style="color: #ed9d13">&#39;0&#39;</span> <span style="color: #d0d0d0">&amp;&amp;</span> <span style="color: #d0d0d0">key_num</span> <span style="color: #d0d0d0">&lt;=</span> <span style="color: #ed9d13">&#39;9&#39;</span><span style="color: #d0d0d0">)</span>
+				<span style="color: #d0d0d0">{</span>
+					<span style="color: #d0d0d0">minute_passed_ones</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">(</span><span style="color: #6ab825; font-weight: bold">int</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">(key_num</span> <span style="color: #d0d0d0">-</span> <span style="color: #ed9d13">&#39;0&#39;</span><span style="color: #d0d0d0">);</span>
+					<span style="color: #d0d0d0">clear_display(</span><span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+					<span style="color: #d0d0d0">clear_display(</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">);</span>
+					<span style="color: #d0d0d0">state</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">;</span>
+				<span style="color: #d0d0d0">}</span>										
+				<span style="color: #6ab825; font-weight: bold">break</span><span style="color: #d0d0d0">;</span>				
+		<span style="color: #d0d0d0">}</span>
+	<span style="color: #d0d0d0">}</span>
+<span style="color: #d0d0d0">}</span>
+</pre></div>
+
+ 
+</div>
+
+<div class="w3-content w3-justify w3-text-grey w3-padding-64" id="report">
+    <b><center><h2 style="font-size:500%;" class="w3-text-light-grey">Rapport</h2></center></b>
+    <hr style="width:500px" class="w3-opacity">
+<center><a style="font-size:200%;" href = "https://www.google.se/">Länk till rapport</a></center>
+</div> 
+
+<!-- END PAGE CONTENT -->
+</div>
+
+</body>
+</html>
